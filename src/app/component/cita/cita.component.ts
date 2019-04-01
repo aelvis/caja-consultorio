@@ -45,4 +45,27 @@ export class CitaComponent implements OnInit {
 			}
 		);
 	}
+	finalizarCambiarEstadoController(id){
+		this.inicio = false;
+		this._usuarioService.actualizarPedidosConsulturioService(id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == 'success'){
+						this.showSuccess("Alerta","Actualizado exitosamente");
+						this.obtenerProducto();
+					}else{
+						this.showError("Alerta","No se encuentran Atenciones");
+						this.inicio = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.inicio = true;
+			}
+		);
+	}
 }

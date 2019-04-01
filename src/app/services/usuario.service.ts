@@ -35,6 +35,12 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/tickets/consultorio/obtenerPedidosCitas', params, {headers: headers});
 	}
+	actualizarPedidosConsulturioService(id){
+		let params = new HttpParams();
+		params = params.append('codex', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/tickets/consultorio/actualizarPedidosCitas', params, {headers: headers});
+	}
 	obtenerPedidosConsulturioService(){
 		let params = new HttpParams();
 		params = params.append('nuevo', 'nuevo');

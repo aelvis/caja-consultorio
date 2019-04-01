@@ -11,15 +11,18 @@
 			      <th scope="col">DNI - RUC</th>
 			      <th scope="col">Descripción</th>
 			      <th scope="col">Monto</th>
+			      <th scope="col">Estado</th>
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr>
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-			      <td>Otto</td>
-			      <td>Mark</td>
-			      <td>Otto</td>
+			    <tr *ngFor="let cit of cita; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <td>{{cit.nombre}}</td>
+			      <td>{{cit.dni_ruc}}</td>
+			      <td>{{cit.descripcion}}</td>
+			      <td>{{cit.monto}}</td>
+			      <td><button *ngIf="cit.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(cit.id)">Finalizar</button><button *ngIf="cit.estado == 1" class="btn btn-success">Imprimir</button></td>
+			      <td ></td>
 			    </tr>
 			  </tbody>
 			</table>
