@@ -1,0 +1,227 @@
+<nav-component></nav-component>
+<br>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12" *ngIf="inicio == true">
+			<h1 class="h3 mb-3 font-weight-normal text-center" style="color: red" (click)="abrirModal()">Atención</h1>
+			<table class="table">
+			  <thead class="thead-light">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th>Atendido</th>
+			      <th scope="col">Editar</th>
+			      <th scope="col">Documento</th>
+			      <th scope="col">Nombre</th>
+			      <th scope="col">Monto</th>
+			      <th scope="col">Tipo Pago</th>
+			      <th>Evaluar</th>
+			      <th scope="col">Eliminar</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr *ngFor="let aten of atencion; index as i">
+			      <th scope="row">{{i+1}}</th>
+			      <th *ngIf="aten.nombre_atendido.length == 0"><button class="btn btn-success" (click)="abrirModalAgregarAtendido(aten.id_cita)">Agregar</button></th>
+			      <th *ngIf="aten.nombre_atendido.length > 0">{{aten.nombre_atendido}}</th>
+			      <th><button class="btn btn-info" (click)="editarUsuario(aten.id_cita)">Editar</button></th>
+			      <td>{{aten.dni_ruc}}</td>
+			      <td>{{aten.nombre}}</td>
+			      <td>S/. {{aten.monto}}</td>
+			      <td>{{aten.tipo_pago}}</td>
+			      <td *ngIf="aten.estado_id == 1"><button class="btn btn-danger">Recibo Emitido</button></td>
+			      <td *ngIf="aten.estado_id == 2 && aten.tipo_pago.length > 0 && aten.nombre_atendido.length > 0"><button class="btn btn-success" (click)="mandarCaja(aten.id_cita)">Mandar a Caja</button></td>
+			      <td *ngIf="aten.estado_id == 2 && aten.tipo_pago.length > 0 && aten.nombre_atendido.length == 0">Agregar Atendido</td>
+			      <td *ngIf="aten.estado_id == 2 && aten.tipo_pago.length == 0">Agregar un Tipo de Pago</td>
+			      <td *ngIf="aten.estado_id == 2" (click)="eliminarCitaUsuario(aten.id_cita)"><button class="btn btn-danger">Eliminar</button></td>
+			      <td *ngIf="aten.estado_id == 3">Finalizado</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+		<div class="col-md-12" *ngIf="inicio == false"><div class="loader" id="loader">Loading...</div></div>
+	</div>
+</div>
+<div class="modal fade" id="abrirmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<div *ngIf="comprobar == true">
+      		<div class="form-group">
+      			<small id="emailHelp" class="form-text text-muted">Tipo Documento.</small>
+			    <input type="text" class="form-control" #dni_ruc value="{{usuario?.dni_ruc}}" disabled>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Nombre.</small>
+			    <input type="text" class="form-control" #nombre value="{{usuario?.nombre}}" disabled>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Dirección.</small>
+			    <input type="text" class="form-control" #direccion value="{{usuario?.direccion}}">
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Monto.</small>
+			    <input type="number" class="form-control" #monto >
+			</div>
+			<select class="form-control" #pago_tipo>
+				<option value="Tarjeta">Tarjeta</option>
+				<option value="Efectivo">Efectivo</option>
+			</select>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Descripción.</small>
+			    <textarea class="form-control" #descripcion rows="3"></textarea>
+			</div>
+			<button class="btn btn-primary btn-block" (click)="crearCita(dni_ruc.value,nombre.value,direccion.value,monto.value,descripcion.value,pago_tipo.value)">Crear Cita</button>
+      	</div>
+      	<div *ngIf="comprobar == false">
+      		<div class="form-group">
+			    <input type="text" class="form-control" #buscar_dni (keyup.enter)="buscarPorDni(buscar_dni.value)">
+			    <small id="emailHelp" class="form-text text-muted">Ingresar Documento.</small>
+			</div>
+
+
+			<h5>Agregar Manual</h5>
+      		<div class="form-group">
+      			<small id="emailHelp" class="form-text text-muted">Tipo Documento.</small>
+			    <input type="text" class="form-control" #dni_ruc_nul>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Nombre.</small>
+			    <input type="text" class="form-control" #nombre_nul>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Dirección.</small>
+			    <input type="text" class="form-control" #direccion_nul>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Monto.</small>
+			    <input type="number" class="form-control" #monto_nul >
+			</div>
+			<select class="form-control" #pago_tipo_nul>
+				<option value="Tarjeta">Tarjeta</option>
+				<option value="Efectivo">Efectivo</option>
+			</select>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Descripción.</small>
+			    <textarea class="form-control" #descripcion_nul rows="3"></textarea>
+			</div>
+			<button class="btn btn-primary btn-block" (click)="crearCita(dni_ruc_nul.value,nombre_nul.value,direccion_nul.value,monto_nul.value,descripcion_nul.value,pago_tipo_nul.value)">Crear Cita</button>
+
+
+
+
+
+
+
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="cerrarModal()" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="abrirmodalEditarUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body"  *ngIf="comprobar_nuevo == false">
+      		<div class="form-group">
+      			<small id="emailHelp" class="form-text text-muted">Tipo Documento.</small>
+			    <input type="text" class="form-control" #dni_ruc_update value="{{usuario_editar?.dni_ruc}}" >
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Nombre.</small>
+			    <input type="text" class="form-control" #nombre_update value="{{usuario_editar?.nombre}}" >
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Dirección.</small>
+			    <input type="text" class="form-control" #direccion_update value="{{usuario_editar?.direccion}}">
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Monto.</small>
+			    <input type="number" class="form-control" #monto_update value="{{usuario_editar?.monto}}">
+			</div>
+			<div *ngIf="usuario_editar?.tipo_pago.length > 0">
+				<span>Seleccionar {{usuario_editar?.tipo_pago}}</span>
+				<select class="form-control"  [(ngModel)]="normal_public">
+					<option value="Tarjeta" *ngIf="usuario_editar?.tipo_pago == 'Tarjeta'" selected>Tarjeta</option>
+					<option value="Efectivo" *ngIf="usuario_editar?.tipo_pago == 'Efectivo'" selected>Efectivo</option>
+					<option value="Tarjeta" *ngIf="usuario_editar?.tipo_pago != 'Tarjeta'">Tarjeta</option>
+					<option value="Efectivo" *ngIf="usuario_editar?.tipo_pago != 'Efectivo'">Efectivo</option>
+				</select>
+			</div>
+			<div *ngIf="usuario_editar?.tipo_pago.length == 0">
+				<select class="form-control" [(ngModel)]="normal">
+					<option value="Tarjeta">Tarjeta</option>
+					<option value="Efectivo">Efectivo</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Descripción.</small>
+			    <textarea class="form-control" #descripcion_update rows="3">{{usuario_editar?.descripcion}}</textarea>
+			</div>
+			<button *ngIf="usuario_editar?.tipo_pago.length > 0" class="btn btn-info btn-block" 
+			(click)="actualizarUsuarioEstadoEditar(
+			usuario_editar?.id_cita,
+			dni_ruc_update.value,
+			nombre_update.value,
+			direccion_update.value,
+			monto_update.value,
+			descripcion_update.value,
+			normal_public)">Actualizar Cita</button>
+			<button *ngIf="usuario_editar?.tipo_pago.length == 0" class="btn btn-warning btn-block" 
+			(click)="actualizarUsuarioEstadoEditar(
+			usuario_editar?.id_cita,
+			dni_ruc_update.value,
+			nombre_update.value,
+			direccion_update.value,
+			monto_update.value,
+			descripcion_update.value,
+			normal)">Actualizar Cita</button>
+      </div>
+      <div class="modal-footer">
+        <button (click)="cerrarModalEditarUsuario()" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="atendido" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+      	<div *ngIf="comprobar_atendido == true">
+      		<div class="form-group">
+      			<small id="emailHelp" class="form-text text-muted">Tipo Documento.</small>
+			    <input type="text" class="form-control" #dni_ruc_atendido value="{{usuario_atendido?.dni_ruc}}" disabled>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Nombre.</small>
+			    <input type="text" class="form-control" #nombre_atendido value="{{usuario_atendido?.nombre}}" disabled>
+			</div>
+			<button class="btn btn-primary btn-block" (click)="agregarActualizarUsuarioAtendido(dni_ruc_atendido.value,nombre_atendido.value)">Agregar Pasciente</button>
+      	</div>
+      	<div *ngIf="comprobar_atendido == false">
+      		<div class="form-group">
+			    <input type="text" class="form-control" #buscar_dni (keyup.enter)="buscarPorDniAtendido(buscar_dni.value)">
+			    <small id="emailHelp" class="form-text text-muted">Ingresar Documento.</small>
+			</div>
+
+			<h5>Agregar Manual</h5>
+      		<div class="form-group">
+      			<small id="emailHelp" class="form-text text-muted">Tipo Documento.</small>
+			    <input type="text" class="form-control" #dni_ruc_atendido_lok>
+			</div>
+			<div class="form-group">
+				<small id="emailHelp" class="form-text text-muted">Nombre.</small>
+			    <input type="text" class="form-control" #nombre_atendido_lok>
+			</div>
+			<button class="btn btn-primary btn-block" (click)="agregarActualizarUsuarioAtendido(dni_ruc_atendido_lok.value,nombre_atendido_lok.value)">Agregar Pasciente</button>
+
+
+      	</div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="cerrarModalAgregarAtendido()" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
