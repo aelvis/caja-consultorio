@@ -29,65 +29,16 @@ export class UsuarioService{
 		}
 		return this.token;
 	}
-	obtenerAtencion(){
+	obtenerPedidosCitasService(){
 		let params = new HttpParams();
 		params = params.append('nuevo', 'nuevo');
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/obtenerAtencionDiaria', params, {headers: headers});
+		return this._http.post(this.url+'/tickets/consultorio/obtenerPedidosCitas', params, {headers: headers});
 	}
-	buscarDni(dni){
+	obtenerPedidosConsulturioService(){
 		let params = new HttpParams();
-		params = params.append('dni_ruc', dni);
+		params = params.append('nuevo', 'nuevo');
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/buscarDni', params, {headers: headers});
-	}
-	crearCitaService(dni_ruc,nombre,direccion,monto,descripcion,pago_tipo){
-		let params = new HttpParams();
-		params = params.append('dni_ruc', dni_ruc);
-		params = params.append('nombre', nombre);
-		params = params.append('direccion', direccion);
-		params = params.append('monto', monto);
-		params = params.append('descripcion', descripcion);
-		params = params.append('tipo_pago', pago_tipo);
-		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/crearCita', params, {headers: headers});
-	}
-	eliminarCitaService(codigo_aleatorio){
-		let params = new HttpParams();
-		params = params.append('codigo_aleatorio', codigo_aleatorio);
-		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/eliminarCita', params, {headers: headers});
-	}
-	editarUsuarioCita(codigo_aleatorio){
-		let params = new HttpParams();
-		params = params.append('codigo_aleatorio', codigo_aleatorio);
-		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/obtenerEditarCita', params, {headers: headers});
-	}
-	mandarDatosCitaEditar(cdox,dni_ruc,nombre,direccion,monto,descripcion,pago_tipo){
-		let params = new HttpParams();
-		params = params.append('cdox', cdox);
-		params = params.append('dni_ruc', dni_ruc);
-		params = params.append('nombre', nombre);
-		params = params.append('direccion', direccion);
-		params = params.append('monto', monto);
-		params = params.append('descripcion', descripcion);
-		params = params.append('pago_tipo', pago_tipo);
-		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/editarUsuarioCita', params, {headers: headers});
-	}
-	actualizarUsuarioAtendido(cdox,dni,nombre){
-		let params = new HttpParams();
-		params = params.append('cdox', cdox);
-		params = params.append('dni', dni);
-		params = params.append('nombre', nombre);
-		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/actualizarUsuarioAtencion', params, {headers: headers});
-	}
-	mandarCajaActualizarUsuarioAtendido(cdox){
-		let params = new HttpParams();
-		params = params.append('cdox', cdox);
-		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
-		return this._http.post(this.url+'/atencion/atencion/mandarCajaUsuarioAtencion', params, {headers: headers});
+		return this._http.post(this.url+'/tickets/consultorio/obtenerPedidosConsulturio', params, {headers: headers});
 	}
 }

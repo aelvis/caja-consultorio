@@ -2,5 +2,30 @@
 <br>
 <div class="container-fluid">
 	<div class="row">
+		<div class="col-md-12" *ngIf="inicio == true">
+			<table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Nombre</th>
+			      <th scope="col">DNI - RUC</th>
+			      <th scope="col">Descripción</th>
+			      <th scope="col">Monto</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">1</th>
+			      <td>Mark</td>
+			      <td>Otto</td>
+			      <td>Mark</td>
+			      <td>Otto</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+		<div class="col-md-12" *ngIf="inicio == false">
+			<div class="loader" id="loader">Loading...</div>
+		</div>
 	</div>
 </div>

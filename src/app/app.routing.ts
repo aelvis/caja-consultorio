@@ -14,8 +14,8 @@ const appRoutes: Routes = [
 	{path: '', redirectTo: 'login', pathMatch: 'full'},
 	{path: 'login', component: LoginComponent},
 	{path: 'inicio', component: InicioComponent, canActivate: [AdminGuard]},
-	{path: 'cita', component: MedicoComponent, canActivate: [AdminGuard]},
-	{path: 'medico', component: CitaComponent, canActivate: [AdminGuard]},
+	{path: 'cita', component: CitaComponent, canActivate: [AdminGuard]},
+	{path: 'medico', component: MedicoComponent, canActivate: [AdminGuard]},
 	{path: '**', component: LoginComponent},
 ];
 
