@@ -12,6 +12,7 @@
 			      <th scope="col">Descripción</th>
 			      <th scope="col">Monto</th>
 			      <th scope="col">Estado</th>
+			      <th scope="col">Boleta</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -22,7 +23,7 @@
 			      <td>{{cit.descripcion}}</td>
 			      <td>{{cit.monto}}</td>
 			      <td><button *ngIf="cit.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(cit.id)">Finalizar</button><button *ngIf="cit.estado == 1" class="btn btn-success">Imprimir</button></td>
-			      <td ></td>
+			      <td >{{num_boleta+1}}</td>
 			    </tr>
 			  </tbody>
 			</table>

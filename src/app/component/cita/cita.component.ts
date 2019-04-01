@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CitaComponent implements OnInit {
 	public inicio:boolean;
 	public cita:boolean;
+	public num_boleta;
   	constructor(private toastr: ToastrService, private _usuarioService: UsuarioService, private _router: Router) { }
 
 	ngOnInit(){
@@ -32,6 +33,7 @@ export class CitaComponent implements OnInit {
 				}else{
 					if(res["mensaje"].cita){
 						this.cita = res["mensaje"].cita;
+						this.num_boleta = res["mensaje"].enviar_boleta_num_secuencia;
 						this.inicio = true;
 					}else{
 						this.showError("Alerta","No se encuentran Atenciones");
