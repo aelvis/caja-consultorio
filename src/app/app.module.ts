@@ -17,6 +17,8 @@ import { InicioComponent} from './component/inicio/inicio.component';
 import { NavAdminComponent} from './component/partial/partial.component';
 import { AtencionComponent } from './component/atencion/atencion.component';
 import { AtencionEditarComponent } from './component/atencion-editar/atencion-editar.component';
+import { CitaComponent } from './component/cita/cita.component';
+import { MedicoComponent } from './component/medico/medico.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,9 @@ import { AtencionEditarComponent } from './component/atencion-editar/atencion-ed
     InicioComponent,
     NavAdminComponent,
     AtencionComponent,
-    AtencionEditarComponent
+    AtencionEditarComponent,
+    CitaComponent,
+    MedicoComponent
   ],
   imports: [
     BrowserModule,

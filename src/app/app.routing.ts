@@ -5,7 +5,8 @@ import { InicioComponent} from './component/inicio/inicio.component';
 import { LoginComponent} from './component/login/login.component';
 import { AtencionComponent } from './component/atencion/atencion.component';
 import { AtencionEditarComponent } from './component/atencion-editar/atencion-editar.component';
-
+import { CitaComponent } from './component/cita/cita.component';
+import { MedicoComponent } from './component/medico/medico.component';
 import { AdminGuard } from './services/admin.guard';
 
 const appRoutes: Routes = [
@@ -13,8 +14,8 @@ const appRoutes: Routes = [
 	{path: '', redirectTo: 'login', pathMatch: 'full'},
 	{path: 'login', component: LoginComponent},
 	{path: 'inicio', component: InicioComponent, canActivate: [AdminGuard]},
-	{path: 'atencion', component: AtencionComponent, canActivate: [AdminGuard]},
-	{path: 'atencion/:id_atencion', component: AtencionEditarComponent, canActivate: [AdminGuard]},
+	{path: 'cita', component: MedicoComponent, canActivate: [AdminGuard]},
+	{path: 'medico', component: CitaComponent, canActivate: [AdminGuard]},
 	{path: '**', component: LoginComponent},
 ];
 
