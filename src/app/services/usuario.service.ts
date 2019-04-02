@@ -35,9 +35,10 @@ export class UsuarioService{
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/tickets/consultorio/obtenerPedidosCitas', params, {headers: headers});
 	}
-	actualizarPedidosConsulturioService(id){
+	actualizarPedidosConsulturioService(id,num_boleta){
 		let params = new HttpParams();
 		params = params.append('codex', id);
+		params = params.append('serie', num_boleta);
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/tickets/consultorio/actualizarPedidosCitas', params, {headers: headers});
 	}
@@ -46,5 +47,18 @@ export class UsuarioService{
 		params = params.append('nuevo', 'nuevo');
 		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
 		return this._http.post(this.url+'/tickets/consultorio/obtenerPedidosConsulturio', params, {headers: headers});
+	}
+	actualizarPedidosConsulturioMedicoService(id,num_boleta){
+		let params = new HttpParams();
+		params = params.append('codex', id);
+		params = params.append('serie', num_boleta);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/tickets/consultorio/actualizarPedidosMedico', params, {headers: headers});
+	}
+	abrirProductosCajaPagoService(id){
+		let params = new HttpParams();
+		params = params.append('codex', id);
+		let headers = new HttpHeaders({'Content-Type':'application/json','Authorization': this.getToken()});
+		return this._http.post(this.url+'/tickets/consultorio/abrirProductosCajaPago', params, {headers: headers});	
 	}
 }

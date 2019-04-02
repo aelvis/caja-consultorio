@@ -10,7 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MedicoComponent implements OnInit {
 	public inicio:boolean;
-	public medico:boolean;
+	public medico;
+	public num_boleta;
+	public productos;
   	constructor(private toastr: ToastrService, private _usuarioService: UsuarioService, private _router: Router) { }
 
 	ngOnInit(){
@@ -32,6 +34,7 @@ export class MedicoComponent implements OnInit {
 				}else{
 					if(res["mensaje"].medico){
 						this.medico = res["mensaje"].medico;
+						this.num_boleta = res["mensaje"].enviar_boleta_num_secuencia;
 						this.inicio = true;
 					}else{
 						this.showError("Alerta","No se encuentran Atenciones");
@@ -45,5 +48,51 @@ export class MedicoComponent implements OnInit {
 			}
 		);
 	}
-
+	finalizarCambiarEstadoController(id){
+		this.inicio = false;
+		this._usuarioService.actualizarPedidosConsulturioMedicoService(id,this.num_boleta).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].codigo == 'success'){
+						this.showSuccess("Alerta","Actualizado exitosamente");
+						this.obtenerProducto();
+					}else{
+						this.showError("Alerta","No se encuentran Atenciones");
+						this.inicio = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.inicio = true;
+			}
+		);
+	}
+	abrirProductosCajaPago(id){
+		this.inicio = false;
+		this._usuarioService.abrirProductosCajaPagoService(id).subscribe(
+			res => {
+				if(res["mensaje"].terminar){
+				  	localStorage.clear();
+				  	this._router.navigate(['/login']);
+				}else{
+					if(res["mensaje"].obtener){
+						$("#obtenerModal").modal("show");
+						this.productos = res["mensaje"].obtener;
+						this.inicio = true;
+					}else{
+						this.showError("Alerta","No se encuentran Atenciones - volver a Intentar");
+						this.inicio = true;
+					}
+				}
+			},
+			error => {
+				this.showError("Alerta","Error de Internet");
+				this.inicio = true;
+			}
+		);
+	}
 }

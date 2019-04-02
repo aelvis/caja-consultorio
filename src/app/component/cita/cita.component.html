@@ -2,13 +2,16 @@
 <br>
 <div class="container-fluid">
 	<div class="row">
+		<div class="col-md-12">
+			<h3 class="text-center">Total del Día: S/{{total?.total| number:'1.0'}}</h3>
+		</div>
 		<div class="col-md-12" *ngIf="inicio == true">
 			<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
 			      <th scope="col">#</th>
 			      <th scope="col">Nombre</th>
-			      <th scope="col">DNI - RUC</th>
+			      <th scope="col">DNI</th>
 			      <th scope="col">Descripción</th>
 			      <th scope="col">Monto</th>
 			      <th scope="col">Estado</th>
@@ -23,7 +26,8 @@
 			      <td>{{cit.descripcion}}</td>
 			      <td>{{cit.monto}}</td>
 			      <td><button *ngIf="cit.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(cit.id)">Finalizar</button><button *ngIf="cit.estado == 1" class="btn btn-success">Imprimir</button></td>
-			      <td >{{num_boleta+1}}</td>
+			      <td *ngIf="cit.serie">{{cit.serie}}</td>
+			      <td *ngIf="!cit.serie">NULL</td>
 			    </tr>
 			  </tbody>
 			</table>
