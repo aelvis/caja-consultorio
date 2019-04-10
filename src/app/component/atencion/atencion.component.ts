@@ -27,9 +27,9 @@ export class AtencionComponent implements OnInit {
   }
 
 	ngOnInit(){
-		this.obtenerProducto();
+		/*this.obtenerProducto();*/
 	}
-	showSuccess(titulo,mensaje) {
+/*	showSuccess(titulo,mensaje) {
     	this.toastr.success(mensaje, titulo);
   	}
   	showError(titulo,mensaje) {
@@ -242,5 +242,5 @@ export class AtencionComponent implements OnInit {
 				this.showError("Alerta","Error de Internet");
 			}
 		);	
-	}
+	}*/
 }
