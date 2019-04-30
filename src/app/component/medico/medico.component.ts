@@ -13,6 +13,7 @@ export class MedicoComponent implements OnInit {
 	public medico;
 	public num_boleta;
 	public productos;
+	public total;
   	constructor(private toastr: ToastrService, private _usuarioService: UsuarioService, private _router: Router) { }
 
 	ngOnInit(){
@@ -36,6 +37,7 @@ export class MedicoComponent implements OnInit {
 						this.medico = res["mensaje"].medico;
 						this.num_boleta = res["mensaje"].enviar_boleta_num_secuencia;
 						this.inicio = true;
+						this.total = res["mensaje"].total;
 					}else{
 						this.showError("Alerta","No se encuentran Atenciones");
 						this.inicio = true;

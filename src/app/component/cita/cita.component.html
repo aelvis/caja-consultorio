@@ -25,7 +25,8 @@
 			      <td>{{cit.dni_ruc}}</td>
 			      <td>{{cit.descripcion}}</td>
 			      <td>{{cit.monto}}</td>
-			      <td><button *ngIf="cit.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(cit.id)">Finalizar</button><button *ngIf="cit.estado == 1" class="btn btn-success">Imprimir</button></td>
+			      <td><button *ngIf="cit.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(cit.id)">Finalizar</button>
+			      	<a *ngIf="cit.estado == 1" class="btn btn-success" target="_blank" href="https://api.consultoriovasquez.com/index.php/tickets/consultorio/imrprimirDocumento/{{cit.id}}.pdf">Imprimir</a></td>
 			      <td *ngIf="cit.serie">{{cit.serie}}</td>
 			      <td *ngIf="!cit.serie">NULL</td>
 			    </tr>

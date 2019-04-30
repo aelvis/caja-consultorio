@@ -2,6 +2,9 @@
 <br>
 <div class="container-fluid">
 	<div class="row">
+		<div class="col-md-12">
+			<h3 class="text-center">Total del Día: S/{{total?.total| number:'1.0'}}</h3>
+		</div>
 		<div class="col-md-12" *ngIf="inicio == true">
 			<table class="table">
 			  <thead class="thead-dark">
@@ -22,7 +25,8 @@
 			      <td>{{med.dni_ruc}}</td>
 			      <td><button class="btn btn-success" (click)="abrirProductosCajaPago(med.id)">Ver Productos</button></td>
 			      <td>{{med.total}}</td>
-			      <td><button *ngIf="med.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(med.id)">Finalizar</button><button *ngIf="med.estado == 1" class="btn btn-success">Imprimir</button></td>
+			      <td><button *ngIf="med.estado == 3" class="btn btn-success" (click)="finalizarCambiarEstadoController(med.id)">Finalizar</button>
+			      	<a *ngIf="med.estado == 1" class="btn btn-success" target="_blank" href="https://api.consultoriovasquez.com/index.php/tickets/consultorio/imrprimirDocumentoMedico/{{med.id_cita}}.pdf">Imprimir</a></td>
 			      <td *ngIf="med.serie">{{med.serie}}</td>
 			      <td *ngIf="!med.serie">NULL</td>
 			    </tr>
